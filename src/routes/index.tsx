@@ -1,5 +1,4 @@
 import { Outlet, RootRoute, Route, Router } from "@tanstack/react-router";
-import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import Navbar from "../components/navbar";
 import Dashboard from "../module/dashboard";
 import SeatsView from "../module/seats-view";
