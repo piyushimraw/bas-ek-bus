@@ -9,7 +9,7 @@ const user = {
   imageUrl:
     'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
 }
-const navigation = [
+export const NAV_ITEMS = [
   { name: 'Dashboard', href: '/dashboard' },
   { name: "Seats View", href: "/seats", }
 ]
@@ -25,7 +25,7 @@ function Navbar() {
           <div className="flex h-16 justify-between">
             <div className="flex">
               <div className="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
-                {navigation.map((item) => (
+                {NAV_ITEMS.map((item) => (
                   <Link
                     key={item.name}
                     to={item.href}
