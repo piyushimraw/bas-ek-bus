@@ -1,14 +1,18 @@
 import { Outlet, RootRoute, Route, Router } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import Navbar from "../components/navbar";
-import Header from "../components/header";
+import Dashboard from "../module/dashboard";
+import SeatsView from "../module/seats-view";
+import { BusProvider } from "../module/seats-view/useBus";
 
 const rootRoute = new RootRoute({
   component: () => (
     <>
       <div className="min-h-full">
         <Navbar />
-        <Outlet />
+        <BusProvider>
+          <Outlet />
+        </BusProvider>
       </div>
 
       <TanStackRouterDevtools />
@@ -19,31 +23,13 @@ const rootRoute = new RootRoute({
 const indexRoute = new Route({
   getParentRoute: () => rootRoute,
   path: "/dashboard",
-  component: function Index() {
-    return (
-      <div className="py-10">
-        <Header text="Dashboard" />
-        <main>
-          <div className="mx-auto max-w-7xl sm:px-6 lg:px-8"></div>
-        </main>
-      </div>
-    );
-  },
+  component: Dashboard,
 });
 
 const aboutRoute = new Route({
   getParentRoute: () => rootRoute,
   path: "/seats",
-  component: function About() {
-    return (
-      <div className="py-10">
-        <Header text="Seats View" />
-        <main>
-          <div className="mx-auto max-w-7xl sm:px-6 lg:px-8"></div>
-        </main>
-      </div>
-    );
-  },
+  component: SeatsView,
 });
 
 const routeTree = rootRoute.addChildren([indexRoute, aboutRoute]);
