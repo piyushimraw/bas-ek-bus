@@ -1,5 +1,5 @@
 import {
-    Navigate,
+  Navigate,
   NotFoundRoute,
   Outlet,
   RootRoute,
@@ -26,15 +26,11 @@ const rootRoute = new RootRoute({
   ),
 });
 
-
-
 const dashboard = new Route({
   getParentRoute: () => rootRoute,
   path: "/dashboard",
   component: Dashboard,
 });
-
-
 
 const seats = new Route({
   getParentRoute: () => rootRoute,
@@ -54,12 +50,17 @@ const notFoundRoute = new NotFoundRoute({
 });
 
 const indexRoute = new Route({
-    getParentRoute: () => rootRoute,
-    path: "/",
-    component: () => <Navigate to="/seats" />,
+  getParentRoute: () => rootRoute,
+  path: "/",
+  component: () => <Navigate to="/seats" />,
 });
 
-const routeTree = rootRoute.addChildren([indexRoute, dashboard, seats, updateReservation]);
+const routeTree = rootRoute.addChildren([
+  indexRoute,
+  dashboard,
+  seats,
+  updateReservation,
+]);
 
 const router = new Router({
   routeTree,
