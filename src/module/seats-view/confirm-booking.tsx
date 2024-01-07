@@ -9,19 +9,25 @@ const ConfirmSeatBooking = ({
   bus,
   onCancel,
   onSubmit,
+  initialValues,
 }: {
   selectedSeats: string[];
   bus: Bus;
   onCancel: () => void;
   onSubmit: (data: SeatBookingPayload) => void;
+  initialValues?: Record<string, {
+    name: string;
+    email: string;
+    phone: string;
+  }>;
 }) => {
   const form = useForm({
     defaultValues: selectedSeats.reduce(
       (acc, seatId) => {
         acc[seatId] = {
-          name: "",
-          email: "",
-          phone: "",
+          name: initialValues?.[seatId]?.name || "",
+          email: initialValues?.[seatId]?.email || "",
+          phone: initialValues?.[seatId]?.phone || "",
         };
         return acc;
       },

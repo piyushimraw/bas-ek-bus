@@ -3,6 +3,7 @@ import Navbar from "../components/navbar";
 import Dashboard from "../module/dashboard";
 import SeatsView from "../module/seats-view";
 import { BusProvider } from "../module/seats-view/useBus";
+import UpdateReservation from "../module/update-reservation";
 
 const rootRoute = new RootRoute({
   component: () => (
@@ -17,19 +18,26 @@ const rootRoute = new RootRoute({
   ),
 });
 
-const indexRoute = new Route({
+const dashboard = new Route({
   getParentRoute: () => rootRoute,
   path: "/dashboard",
   component: Dashboard,
 });
 
-const aboutRoute = new Route({
+const seats = new Route({
   getParentRoute: () => rootRoute,
   path: "/seats",
   component: SeatsView,
 });
 
-const routeTree = rootRoute.addChildren([indexRoute, aboutRoute]);
+const updateReservation = new Route({
+    getParentRoute: () => rootRoute,
+    path: "/edit-booking/$seatNumber",
+    component: UpdateReservation,
+});
+
+
+const routeTree = rootRoute.addChildren([dashboard, seats, updateReservation]);
 
 const router = new Router({ routeTree });
 

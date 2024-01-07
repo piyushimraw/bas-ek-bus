@@ -1,8 +1,10 @@
+import { useNavigate } from "@tanstack/react-router";
 import Header from "../../components/header";
 import { useBus } from "../seats-view/useBus";
 
 function Dashboard() {
   const { bus, getBookedSeats, unbookSeats } = useBus();
+  const navigate = useNavigate();
   if (!bus) return <div>loading...</div>;
   const bookedSeats = getBookedSeats();
   return (
@@ -92,6 +94,9 @@ function Dashboard() {
                           <button
                             type="button"
                             className="rounded bg-indigo-50 px-2 py-1 text-xs font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100"
+                            onClick={() => {
+                                navigate({to: "/edit-booking/$seatNumber", params: {seatNumber: seat.number}});
+                            }}
                           >
                             Edit Booking
                           </button>
