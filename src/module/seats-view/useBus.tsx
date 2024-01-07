@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useEffect, useState } from "react";
+import { ReactNode, createContext, useContext, useEffect, useState } from "react";
 import { Bus, getBusData, getSeat } from "../../utils/data";
 
 type Params = {
@@ -22,7 +22,7 @@ type UseBusReturnType = {
 
 const BusContext = createContext<UseBusReturnType | undefined>(undefined);
 
-export function useBus(params: Params): UseBusReturnType {
+ function _useBus(params: Params): UseBusReturnType {
   const { id } = params;
   const [bus, setBus] = useState<Bus>();
   const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
@@ -82,7 +82,17 @@ export function useBus(params: Params): UseBusReturnType {
   };
 }
 
-export function BusProvider({ children }: { children: ReactNode }) {
-  const bus = useBus({ id: "1" });
+export function BusProvider({ children, busId = "1" }: { children: ReactNode, busId?: string }) {
+  const bus = _useBus({ id: busId });
   return <BusContext.Provider value={bus}>{children}</BusContext.Provider>;
+}
+
+
+// eslint-disable-next-line react-refresh/only-export-components
+export const useBus = () => {
+  const context = useContext(BusContext);
+  if (context === undefined) {
+    throw new Error("useBus must be used within a BusProvider");
+  }
+  return context;
 }
