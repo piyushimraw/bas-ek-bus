@@ -27,14 +27,13 @@ function SeatsView() {
   );
 }
 
-// displays the seatsh in a bus layout
-
+// displays the seats in a bus layout
 type Props = {
   bus: Bus;
   onSeatsConfirm: (bus: Bus) => void;
 };
 function SeatSelector({bus}: Props) {
-  const { isSeatSelected, toggleSelectSeat } = useBus({ id: bus.id });
+  const { isSeatSelected, toggleSelectSeat, totalSelectedSeats } = useBus({ id: bus.id });
   const decks  =  Object.keys(bus.seats).map<Deck>((deck) => deck as Deck)   
   return (
     <div className="border-b border-gray-200 bg-white px-4 py-5 sm:px-6">
@@ -47,8 +46,12 @@ function SeatSelector({bus}: Props) {
         <div className="ml-4 mt-2 flex-shrink-0">
           <button
             type="button"
-            className="relative inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          >Confirm Seats
+            className={`relative inline-flex items-center rounded-md px-3 py-2 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${totalSelectedSeats === 0 ? 'bg-gray-500 cursor-not-allowed' : 'bg-indigo-600 hover:bg-indigo-500 focus-visible:outline-indigo-600'} text-white`}
+            disabled={totalSelectedSeats === 0}
+            onClick={() => {
+              console.log("booked");
+            }}
+          >Confirm Booking
           </button>
         </div>
       </div>
