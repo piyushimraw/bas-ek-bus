@@ -1,16 +1,16 @@
-import { useState } from "react";
-import Header from "../../components/header";
+import { useState } from 'react';
+import Header from '../../components/header';
 
-import ConfirmSeatBooking from "./confirm-booking";
-import { SeatSelector } from "./seats-selector";
-import { useBus } from "./useBus";
+import ConfirmSeatBooking from './confirm-booking';
+import { SeatSelector } from './seats-selector';
+import { useBus } from './useBus';
 
 function SeatsView() {
   const { bus, selectedSeats, bookSeats } = useBus();
   const [showPassengerForm, setShowPassengerForm] = useState<boolean>();
-  let text = "Choose Seats";
+  let text = 'Choose Seats';
   if (showPassengerForm) {
-    text = "Passenger Details";
+    text = 'Passenger Details';
   }
 
   let description =
@@ -25,9 +25,7 @@ function SeatsView() {
       <main>
         <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
           <div className="border-b border-gray-200 pb-5">
-            <p className="mt-2 max-w-4xl text-sm text-gray-500">
-              {description}
-            </p>
+            <p className="mt-2 max-w-4xl text-sm text-gray-500">{description}</p>
           </div>
           {bus && showPassengerForm && (
             <ConfirmSeatBooking

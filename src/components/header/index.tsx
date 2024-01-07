@@ -1,9 +1,7 @@
 type Props = {
-    text: string
-}
-function Header({
-    text
-}:Props) {
+  text: string;
+};
+function Header({ text }: Props) {
   return (
     <header>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

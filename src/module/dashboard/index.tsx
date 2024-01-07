@@ -1,6 +1,6 @@
-import { useNavigate } from "@tanstack/react-router";
-import Header from "../../components/header";
-import { useBus } from "../seats-view/useBus";
+import { useNavigate } from '@tanstack/react-router';
+import Header from '../../components/header';
+import { useBus } from '../seats-view/useBus';
 
 function Dashboard() {
   const { bus, getBookedSeats, unbookSeats } = useBus();
@@ -55,47 +55,47 @@ function Dashboard() {
                       >
                         Booked At
                       </th>
-                      <th
-                        scope="col"
-                        className="relative py-3.5 pl-3 pr-4 sm:pr-0"
-                      >
+                      <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-0">
                         <span className="sr-only">Edit</span>
                       </th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
                     {bookedSeats.map((seat) => (
-                      <tr key={seat.bookedBy?.email ?? ""}>
+                      <tr key={seat.bookedBy?.email ?? ''}>
                         <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
-                          {seat.bookedBy?.name ?? ""}
+                          {seat.bookedBy?.name ?? ''}
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {seat.bookedBy?.phone ?? ""}
+                          {seat.bookedBy?.phone ?? ''}
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {seat.bookedBy?.email ?? ""}
+                          {seat.bookedBy?.email ?? ''}
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {seat.number ?? ""}
+                          {seat.number ?? ''}
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                           {seat.bookedAt
-                            ? new Intl.DateTimeFormat("default", {
-                                year: "numeric",
-                                month: "long",
-                                day: "numeric",
-                                hour: "numeric",
-                                minute: "numeric",
-                                second: "numeric",
+                            ? new Intl.DateTimeFormat('default', {
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric',
+                                hour: 'numeric',
+                                minute: 'numeric',
+                                second: 'numeric',
                               }).format(new Date(seat.bookedAt))
-                            : ""}
+                            : ''}
                         </td>
                         <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0 flex gap-4">
                           <button
                             type="button"
                             className="rounded bg-indigo-50 px-2 py-1 text-xs font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100"
                             onClick={() => {
-                                navigate({to: "/edit-booking/$seatNumber", params: {seatNumber: seat.number}});
+                              navigate({
+                                to: '/edit-booking/$seatNumber',
+                                params: { seatNumber: seat.number },
+                              });
                             }}
                           >
                             Edit Booking
@@ -103,11 +103,11 @@ function Dashboard() {
                           <button
                             type="button"
                             className="rounded bg-red-400 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-red-600"
-                            onClick={() =>  {
-                                unbookSeats([seat.id])
+                            onClick={() => {
+                              unbookSeats([seat.id]);
                             }}
                           >
-                           Delete Booking
+                            Delete Booking
                           </button>
                         </td>
                       </tr>

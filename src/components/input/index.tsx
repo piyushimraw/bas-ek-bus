@@ -1,4 +1,4 @@
-import { ExclamationCircleIcon } from "@heroicons/react/20/solid";
+import { ExclamationCircleIcon } from '@heroicons/react/20/solid';
 
 type Props = {
   htmlFor: string;
@@ -10,7 +10,7 @@ type Props = {
   error?: string;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  type: HTMLInputElement["type"];
+  type: HTMLInputElement['type'];
 };
 function Input({
   htmlFor,
@@ -37,9 +37,11 @@ function Input({
           type={type}
           name={name}
           id={id}
-          className={`block w-full rounded-md border-1 py-1.5 pr-10 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 ${error ? "ring-1 ring-red-500" : ""}`}
+          className={`block w-full rounded-md border-1 py-1.5 pr-10 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 ${
+            error ? 'ring-1 ring-red-500' : ''
+          }`}
           placeholder={placeholder}
-          aria-invalid={error ? "true" : "false"}
+          aria-invalid={error ? 'true' : 'false'}
           aria-describedby={`${id}-error`}
           value={value}
           defaultValue={defaultValue}
@@ -47,10 +49,7 @@ function Input({
         />
         {error && (
           <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-            <ExclamationCircleIcon
-              className="h-5 w-5 text-red-500"
-              aria-hidden="true"
-            />
+            <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
           </div>
         )}
       </div>

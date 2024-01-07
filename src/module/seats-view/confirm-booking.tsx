@@ -1,8 +1,8 @@
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm, FormProvider } from "react-hook-form";
-import { Bus, SeatBookingPayload } from "../../utils/data";
-import { seatUserValidation } from "./validation";
-import PassengerDetailsCard from "./passenger-details";
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm, FormProvider } from 'react-hook-form';
+import { Bus, SeatBookingPayload } from '../../utils/data';
+import { seatUserValidation } from './validation';
+import PassengerDetailsCard from './passenger-details';
 
 const ConfirmSeatBooking = ({
   selectedSeats,
@@ -15,19 +15,22 @@ const ConfirmSeatBooking = ({
   bus: Bus;
   onCancel: () => void;
   onSubmit: (data: SeatBookingPayload) => void;
-  initialValues?: Record<string, {
-    name: string;
-    email: string;
-    phone: string;
-  }>;
+  initialValues?: Record<
+    string,
+    {
+      name: string;
+      email: string;
+      phone: string;
+    }
+  >;
 }) => {
   const form = useForm({
     defaultValues: selectedSeats.reduce(
       (acc, seatId) => {
         acc[seatId] = {
-          name: initialValues?.[seatId]?.name || "",
-          email: initialValues?.[seatId]?.email || "",
-          phone: initialValues?.[seatId]?.phone || "",
+          name: initialValues?.[seatId]?.name || '',
+          email: initialValues?.[seatId]?.email || '',
+          phone: initialValues?.[seatId]?.phone || '',
         };
         return acc;
       },
@@ -38,7 +41,7 @@ const ConfirmSeatBooking = ({
           email: string;
           phone: string;
         }
-      >
+      >,
     ),
     resolver: yupResolver(seatUserValidation),
   });
@@ -63,10 +66,12 @@ const ConfirmSeatBooking = ({
             type="submit"
             className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             onClick={() => {
-              form.handleSubmit((data) => {onSubmit(data)})();
+              form.handleSubmit((data) => {
+                onSubmit(data);
+              })();
             }}
           >
-            {initialValues ? "Update Booking"  : "Confirm Booking"}
+            {initialValues ? 'Update Booking' : 'Confirm Booking'}
           </button>
         </div>
       </div>

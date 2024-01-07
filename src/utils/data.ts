@@ -21,7 +21,7 @@ export type Bus = {
   };
 };
 
-export type SeatBookingPayload =  Record<string, User>;
+export type SeatBookingPayload = Record<string, User>;
 
 export const getBusData = async (id: string) => {
   const bus: string | null = localStorage.getItem(`bus:${id}`);
@@ -32,7 +32,7 @@ export const getBusData = async (id: string) => {
 };
 
 export const setBusData = async (bus: Bus) => {
-    localStorage.setItem(`bus:${bus.id}`, JSON.stringify(bus));
+  localStorage.setItem(`bus:${bus.id}`, JSON.stringify(bus));
 };
 
 export const bookSeat = async (busId: string, seatId: string, user: User) => {
@@ -43,36 +43,32 @@ export const bookSeat = async (busId: string, seatId: string, user: User) => {
     seat.bookedBy = user;
     localStorage.setItem(`bus:${busId}`, JSON.stringify(bus));
   }
-return null;
+  return null;
 };
 
-export type Deck = "L" | "U";
+export type Deck = 'L' | 'U';
 
-export type SeatNumber = [
-    Deck,
-    string
-];
+export type SeatNumber = [Deck, string];
 
 export const getSeat = (bus: Bus, seatId: string) => {
-    const [floor, seatNumber] = parseSeatNumber(seatId);
-    const seat = bus.seats[floor][Number.parseInt(seatNumber, 10)];
-    return seat;
-}
+  const [floor, seatNumber] = parseSeatNumber(seatId);
+  const seat = bus.seats[floor][Number.parseInt(seatNumber, 10)];
+  return seat;
+};
 
 export const parseSeatNumber = (seatId: string): SeatNumber => {
-    const [floor, ...seatNumber] = seatId.split("");
-    return [floor, seatNumber.join("")] as SeatNumber ;
-}
-
+  const [floor, ...seatNumber] = seatId.split('');
+  return [floor, seatNumber.join('')] as SeatNumber;
+};
 
 const floorIdentifier = (n: number) => {
   switch (n) {
     case 0:
-      return "L";
+      return 'L';
     case 1:
-      return "U";
+      return 'U';
     default:
-        return "L";
+      return 'L';
   }
 };
 export const PopulateBusData = async (id: string) => {
@@ -83,8 +79,8 @@ export const PopulateBusData = async (id: string) => {
     id: id,
     name: `Delhi Manali Volvo${id}`,
     seats: {
-        L: [],
-        U: [],
+      L: [],
+      U: [],
     },
   };
   for (let i = 0; i <= 1; i++) {
