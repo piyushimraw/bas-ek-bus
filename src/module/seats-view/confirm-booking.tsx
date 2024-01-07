@@ -66,7 +66,7 @@ const ConfirmSeatBooking = ({
               form.handleSubmit((data) => {onSubmit(data)})();
             }}
           >
-            Confirm Booking
+            {initialValues ? "Update Booking"  : "Confirm Booking"}
           </button>
         </div>
       </div>

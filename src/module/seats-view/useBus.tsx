@@ -9,6 +9,7 @@ type Params = {
 type UseBusReturnType = {
   bus?: Bus;
   bookSeats: (seatIds: SeatBookingPayload) => void;
+  updateSeats: (seatIds: SeatBookingPayload) => void;
   unbookSeats: (seatIds: string[]) => void;
   isSeatOccupied: (seatId: string) => boolean;
   isSeatSelected: (seatId: string) => boolean;
@@ -105,6 +106,23 @@ const BusContext = createContext<UseBusReturnType | undefined>(undefined);
     setBusData(newBus);
   };
 
+  const updateSeats = (payload: SeatBookingPayload) => {
+    if (!bus) return;
+    const newBus = { ...bus };
+    const seatIds = Object.keys(payload);
+    seatIds.forEach((seatId) => {
+      const [floor, seatNumber]: SeatNumber = seatId.split("") as SeatNumber;
+      newBus.seats[floor][Number.parseInt(seatNumber, 10)].bookedBy = payload[seatId];
+    });
+    setBus(newBus);
+    setSelectedSeats([]);
+    setBusData(newBus).then(() => {
+      navigate({
+        to: "/dashboard"
+      });
+    });
+  }
+
   const getBookedSeats = () => {
     if (!bus) return [];
     const bookedSeats: Seat[] = [];
@@ -125,6 +143,7 @@ const BusContext = createContext<UseBusReturnType | undefined>(undefined);
     selectedSeats,
     totalSelectedSeats: selectedSeats.length,
     bookSeats: bookSeats,
+    updateSeats: updateSeats,
     unbookSeats: unbookSeats,
     isSeatOccupied,
     isSeatSelected: isSeatSelected,

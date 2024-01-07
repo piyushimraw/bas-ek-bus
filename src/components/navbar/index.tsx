@@ -9,6 +9,7 @@ const user = {
   imageUrl:
     'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
 }
+// eslint-disable-next-line react-refresh/only-export-components
 export const NAV_ITEMS = [
   { name: 'Dashboard', href: '/dashboard' },
   { name: "Seats View", href: "/seats", }
@@ -40,6 +41,7 @@ function Navbar() {
                     inactiveProps={{
                       className: 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium'
                     }}
+                    params={{}}
                   >
                     {item.name}
                   </Link>
