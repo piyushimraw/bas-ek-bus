@@ -1,5 +1,6 @@
 import { ReactNode, createContext, useContext, useEffect, useState } from "react";
-import { Bus, SeatBookingPayload, SeatNumber, getBusData, getSeat, setBusData } from "../../utils/data";
+import { Bus, Seat, SeatBookingPayload, SeatNumber, getBusData, getSeat, setBusData } from "../../utils/data";
+import { useNavigate } from "@tanstack/react-router";
 
 type Params = {
   id: string;
@@ -11,6 +12,7 @@ type UseBusReturnType = {
   unbookSeats: (seatIds: SeatBookingPayload) => void;
   isSeatOccupied: (seatId: string) => boolean;
   isSeatSelected: (seatId: string) => boolean;
+  getBookedSeats: () => Seat[],
   selectedSeats: string[];
   totalSelectedSeats: number;
   selectSeat: (seatId: string) => void;
@@ -26,6 +28,8 @@ const BusContext = createContext<UseBusReturnType | undefined>(undefined);
   const { id } = params;
   const [bus, setBus] = useState<Bus>();
   const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
+
+  const navigate =  useNavigate();
 
   useEffect(() => {
     (async () => {
@@ -75,10 +79,15 @@ const BusContext = createContext<UseBusReturnType | undefined>(undefined);
       const [floor, seatNumber]: SeatNumber = seatId.split("") as SeatNumber;
       newBus.seats[floor][Number.parseInt(seatNumber, 10)].isOccupied = true;
       newBus.seats[floor][Number.parseInt(seatNumber, 10)].bookedBy = payload[seatId];
+      newBus.seats[floor][Number.parseInt(seatNumber, 10)].bookedAt = new Date();
     });
     setBus(newBus);
     setSelectedSeats([]);
-    setBusData(newBus);
+    setBusData(newBus).then(() => {
+      navigate({
+        to: "/dashboard"
+      });
+    });
   };
 
   const unbookSeats = (payload: SeatBookingPayload) => {
@@ -89,11 +98,26 @@ const BusContext = createContext<UseBusReturnType | undefined>(undefined);
       const [floor, seatNumber]: SeatNumber = seatId.split("") as SeatNumber;
       newBus.seats[floor][Number.parseInt(seatNumber, 10)].isOccupied = false;
       newBus.seats[floor][Number.parseInt(seatNumber, 10)].bookedBy = undefined;
+      newBus.seats[floor][Number.parseInt(seatNumber, 10)].bookedAt = undefined;
     });
     setBus(newBus);
     setSelectedSeats([]);
     setBusData(newBus);
   };
+
+  const getBookedSeats = () => {
+    if (!bus) return [];
+    const bookedSeats: Seat[] = [];
+    const floors = Object.keys(bus.seats) as ["L", "U"];
+    floors.forEach((floor: "L" | "U") => {
+      bus.seats[floor].forEach((seat) => {
+        if (seat.isOccupied) {
+          bookedSeats.push(seat);
+        }
+      });
+    });
+    return bookedSeats;
+  }
 
 
   return {
@@ -108,6 +132,7 @@ const BusContext = createContext<UseBusReturnType | undefined>(undefined);
     unselectSeat: unselectSeat,
     resetSelectedSeats: resetSelectedSeats,
     toggleSelectSeat: toggleSelectSeat,
+    getBookedSeats
   };
 }
 

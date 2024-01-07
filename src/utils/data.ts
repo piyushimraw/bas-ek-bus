@@ -10,6 +10,7 @@ export type Seat = {
   number: string;
   isOccupied: boolean;
   bookedBy?: User;
+  bookedAt?: Date;
 };
 export type Bus = {
   id: string;
