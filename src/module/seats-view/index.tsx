@@ -30,7 +30,6 @@ function SeatsView() {
             <SeatSelector
               bus={bus}
               onSeatsConfirm={() => {
-                console.log("confirm seats");
                 setShowPassengerForm(true);
               }}
             />

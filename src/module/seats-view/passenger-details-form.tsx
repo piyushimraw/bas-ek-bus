@@ -16,6 +16,7 @@ const PassengerDetailsForm = ({ fieldName }: { fieldName: string }) => {
     const emailError = errors[fieldName]?.email?.message;
     const nameError = errors[fieldName]?.name?.message;
     const phoneError = errors[fieldName]?.phone?.message;
+
     return (
       <div>
         <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
