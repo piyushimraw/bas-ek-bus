@@ -14,8 +14,6 @@ const rootRoute = new RootRoute({
           <Outlet />
         </BusProvider>
       </div>
-
-      <TanStackRouterDevtools />
     </>
   ),
 });
