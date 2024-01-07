@@ -39,8 +39,10 @@ export const bookSeat = async (busId: string, seatId: string, user: User) => {
 return null;
 };
 
+export type Deck = "L" | "U";
+
 type SeatNumber = [
-    "L" | "U",
+    Deck,
     string
 ];
 
