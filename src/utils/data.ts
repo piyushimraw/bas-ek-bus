@@ -54,10 +54,16 @@ export type SeatNumber = [
 ];
 
 export const getSeat = (bus: Bus, seatId: string) => {
-    const [floor, seatNumber]: SeatNumber = seatId.split("") as SeatNumber;
-    const seat = {...bus.seats[floor][Number.parseInt(seatNumber, 10)]};
+    const [floor, seatNumber] = parseSeatNumber(seatId);
+    const seat = bus.seats[floor][Number.parseInt(seatNumber, 10)];
     return seat;
 }
+
+export const parseSeatNumber = (seatId: string): SeatNumber => {
+    const [floor, ...seatNumber] = seatId.split("");
+    return [floor, seatNumber.join("")] as SeatNumber ;
+}
+
 
 const floorIdentifier = (n: number) => {
   switch (n) {

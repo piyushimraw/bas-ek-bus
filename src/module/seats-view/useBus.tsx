@@ -1,5 +1,5 @@
 import { ReactNode, createContext, useContext, useEffect, useState } from "react";
-import { Bus, Seat, SeatBookingPayload, SeatNumber, getBusData, getSeat, setBusData } from "../../utils/data";
+import { Bus, Seat, SeatBookingPayload, getBusData, getSeat, parseSeatNumber, setBusData } from "../../utils/data";
 import { useNavigate } from "@tanstack/react-router";
 
 type Params = {
@@ -56,7 +56,7 @@ const BusContext = createContext<UseBusReturnType | undefined>(undefined);
   const isSeatOccupied = (seatId: string) => {
     if (!bus) return false;
     const seat =  getSeat(bus, seatId);
-    return seat?.isOccupied;
+    return seat?.isOccupied ?? false;
   };
 
   const isSeatSelected = (seatId: string) => {
@@ -77,7 +77,7 @@ const BusContext = createContext<UseBusReturnType | undefined>(undefined);
     const newBus = { ...bus };
     const seatIds = Object.keys(payload);
     seatIds.forEach((seatId) => {
-      const [floor, seatNumber]: SeatNumber = seatId.split("") as SeatNumber;
+      const [floor, seatNumber] = parseSeatNumber(seatId);
       newBus.seats[floor][Number.parseInt(seatNumber, 10)].isOccupied = true;
       newBus.seats[floor][Number.parseInt(seatNumber, 10)].bookedBy = payload[seatId];
       newBus.seats[floor][Number.parseInt(seatNumber, 10)].bookedAt = new Date();
@@ -96,7 +96,7 @@ const BusContext = createContext<UseBusReturnType | undefined>(undefined);
     const newBus = { ...bus };
     const seatIds = payload;
     seatIds.forEach((seatId) => {
-      const [floor, seatNumber]: SeatNumber = seatId.split("") as SeatNumber;
+      const [floor, seatNumber] =  parseSeatNumber(seatId);
       newBus.seats[floor][Number.parseInt(seatNumber, 10)].isOccupied = false;
       newBus.seats[floor][Number.parseInt(seatNumber, 10)].bookedBy = undefined;
       newBus.seats[floor][Number.parseInt(seatNumber, 10)].bookedAt = undefined;
@@ -111,7 +111,7 @@ const BusContext = createContext<UseBusReturnType | undefined>(undefined);
     const newBus = { ...bus };
     const seatIds = Object.keys(payload);
     seatIds.forEach((seatId) => {
-      const [floor, seatNumber]: SeatNumber = seatId.split("") as SeatNumber;
+      const [floor, seatNumber] = parseSeatNumber(seatId);
       newBus.seats[floor][Number.parseInt(seatNumber, 10)].bookedBy = payload[seatId];
     });
     setBus(newBus);

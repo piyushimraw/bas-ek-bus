@@ -46,14 +46,15 @@ export function SeatSelector({ bus, onSeatsConfirm }: Props) {
           </h3>
           <div className="grid grid-rows-3 grid-flow-col gap-4 odd:py-10 mt-4">
             {bus.seats[deck].map((seat) => {
+                const seatOccupied = isSeatOccupied(seat.id);
               return (
                 <div
                   onClick={() => toggleSelectSeat(seat.id)}
                   key={seat.id}
                   className={`${isSeatSelected(seat.id) && "bg-green-200"} ${
-                    isSeatOccupied(seat.id) && " bg-red-300"
+                    seatOccupied && " bg-red-300"
                   } ${
-                    isSeatOccupied(seat.id)
+                    seatOccupied
                       ? " cursor-not-allowed"
                       : " cursor-pointer"
                   } bg-gray-100 p-2 rounded-md [&:nth-child(3n)]:mt-8 last:row-span-3 last:self-center last:h-max`}

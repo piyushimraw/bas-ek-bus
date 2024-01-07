@@ -1,9 +1,10 @@
-import { Outlet, RootRoute, Route, Router } from "@tanstack/react-router";
+import { NotFoundRoute, Outlet, RootRoute, Route, Router } from "@tanstack/react-router";
 import Navbar from "../components/navbar";
 import Dashboard from "../module/dashboard";
 import SeatsView from "../module/seats-view";
 import { BusProvider } from "../module/seats-view/useBus";
 import UpdateReservation from "../module/update-reservation";
+import NotFound from "../module/not-found";
 
 const rootRoute = new RootRoute({
   component: () => (
@@ -36,9 +37,14 @@ const updateReservation = new Route({
     component: UpdateReservation,
 });
 
+const notFoundRoute = new NotFoundRoute({
+    getParentRoute: () => rootRoute,
+    component: NotFound,
+  })
+
 
 const routeTree = rootRoute.addChildren([dashboard, seats, updateReservation]);
 
-const router = new Router({ routeTree });
+const router = new Router({ routeTree, notFoundRoute, defaultPreload: "intent" });
 
 export { router };
