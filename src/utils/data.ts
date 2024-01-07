@@ -41,12 +41,12 @@ return null;
 
 export type Deck = "L" | "U";
 
-type SeatNumber = [
+export type SeatNumber = [
     Deck,
     string
 ];
 
-const getSeat = (bus: Bus, seatId: string) => {
+export const getSeat = (bus: Bus, seatId: string) => {
     const [floor, seatNumber]: SeatNumber = seatId.split("") as SeatNumber;
     const seat = bus.seats[floor][Number.parseInt(seatNumber, 10)];
     return seat;

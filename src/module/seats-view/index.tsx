@@ -1,4 +1,3 @@
-import React from "react";
 import Header from "../../components/header";
 import { Bus, Deck } from "../../utils/data";
 import { useBus } from "./useBus";
@@ -35,6 +34,7 @@ type Props = {
   onSeatsConfirm: (bus: Bus) => void;
 };
 function SeatSelector({bus}: Props) {
+  const { isSeatSelected, toggleSelectSeat } = useBus({ id: bus.id });
   const decks  =  Object.keys(bus.seats).map<Deck>((deck) => deck as Deck)   
   return (
     <div className="border-b border-gray-200 bg-white px-4 py-5 sm:px-6">
@@ -48,7 +48,8 @@ function SeatSelector({bus}: Props) {
           <button
             type="button"
             className="relative inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          >Confirm Seats</button>
+          >Confirm Seats
+          </button>
         </div>
       </div>
       {
@@ -61,7 +62,7 @@ function SeatSelector({bus}: Props) {
                     <div className="grid grid-rows-3 grid-flow-col gap-4 odd:py-10 mt-4">
                         {
                             bus.seats[deck].map((seat) => (
-                                <div key={seat.id} className="bg-gray-100 p-2 rounded-md cursor-pointer [&:nth-child(3n)]:mt-8 last:row-span-3 last:self-center last:h-max">
+                                <div onClick={() => toggleSelectSeat(seat.id)} key={seat.id} className={`${isSeatSelected(seat.id) ? "bg-green-200" : "bg-gray-100"} p-2 rounded-md cursor-pointer [&:nth-child(3n)]:mt-8 last:row-span-3 last:self-center last:h-max`}>
                                     {seat.id}
                                 </div>
                             ))
