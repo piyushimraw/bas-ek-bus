@@ -24,7 +24,7 @@ function SeatsView() {
             </p>
           </div>
           {bus && showPassengerForm && (
-            <ConfirmSeatBooking bus={bus} selectedSeats={selectedSeats} />
+            <ConfirmSeatBooking bus={bus} selectedSeats={selectedSeats} onCancel={() =>  setShowPassengerForm(false)} />
           )}
           {bus && !showPassengerForm && (
             <SeatSelector
