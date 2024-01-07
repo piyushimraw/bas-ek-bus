@@ -9,7 +9,7 @@ type Params = {
 type UseBusReturnType = {
   bus?: Bus;
   bookSeats: (seatIds: SeatBookingPayload) => void;
-  unbookSeats: (seatIds: SeatBookingPayload) => void;
+  unbookSeats: (seatIds: string[]) => void;
   isSeatOccupied: (seatId: string) => boolean;
   isSeatSelected: (seatId: string) => boolean;
   getBookedSeats: () => Seat[],
@@ -90,10 +90,10 @@ const BusContext = createContext<UseBusReturnType | undefined>(undefined);
     });
   };
 
-  const unbookSeats = (payload: SeatBookingPayload) => {
+  const unbookSeats = (payload: string[]) => {
     if (!bus) return;
     const newBus = { ...bus };
-    const seatIds = Object.keys(payload);
+    const seatIds = payload;
     seatIds.forEach((seatId) => {
       const [floor, seatNumber]: SeatNumber = seatId.split("") as SeatNumber;
       newBus.seats[floor][Number.parseInt(seatNumber, 10)].isOccupied = false;

@@ -2,7 +2,7 @@ import Header from "../../components/header";
 import { useBus } from "../seats-view/useBus";
 
 function Dashboard() {
-  const { bus, getBookedSeats } = useBus();
+  const { bus, getBookedSeats, unbookSeats } = useBus();
   if (!bus) return <div>loading...</div>;
   const bookedSeats = getBookedSeats();
   return (
@@ -51,7 +51,7 @@ function Dashboard() {
                         scope="col"
                         className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                       >
-                         Booked At
+                        Booked At
                       </th>
                       <th
                         scope="col"
@@ -77,13 +77,33 @@ function Dashboard() {
                           {seat.number ?? ""}
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {seat.bookedAt ? new Intl.DateTimeFormat('default', {
-                            year: 'numeric', month: 'long', day: 'numeric', 
-                            hour: 'numeric', minute: 'numeric', second: 'numeric'
-                          }).format(new Date(seat.bookedAt)) : ""}
+                          {seat.bookedAt
+                            ? new Intl.DateTimeFormat("default", {
+                                year: "numeric",
+                                month: "long",
+                                day: "numeric",
+                                hour: "numeric",
+                                minute: "numeric",
+                                second: "numeric",
+                              }).format(new Date(seat.bookedAt))
+                            : ""}
                         </td>
-                        <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                    
+                        <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0 flex gap-4">
+                          <button
+                            type="button"
+                            className="rounded bg-indigo-50 px-2 py-1 text-xs font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100"
+                          >
+                            Edit Booking
+                          </button>
+                          <button
+                            type="button"
+                            className="rounded bg-red-400 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-red-600"
+                            onClick={() =>  {
+                                unbookSeats([seat.id])
+                            }}
+                          >
+                           Delete Booking
+                          </button>
                         </td>
                       </tr>
                     ))}
