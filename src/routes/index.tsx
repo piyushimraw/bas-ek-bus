@@ -5,13 +5,13 @@ import {
   RootRoute,
   Route,
   Router,
-} from "@tanstack/react-router";
-import Navbar from "../components/navbar";
-import Dashboard from "../module/dashboard";
-import SeatsView from "../module/seats-view";
-import { BusProvider } from "../module/seats-view/useBus";
-import UpdateReservation from "../module/update-reservation";
-import NotFound from "../module/not-found";
+} from '@tanstack/react-router';
+import Navbar from '../components/navbar';
+import Dashboard from '../module/dashboard';
+import SeatsView from '../module/seats-view';
+import { BusProvider } from '../module/seats-view/useBus';
+import UpdateReservation from '../module/update-reservation';
+import NotFound from '../module/not-found';
 
 const rootRoute = new RootRoute({
   component: () => (
@@ -28,19 +28,19 @@ const rootRoute = new RootRoute({
 
 const dashboard = new Route({
   getParentRoute: () => rootRoute,
-  path: "/dashboard",
+  path: '/dashboard',
   component: Dashboard,
 });
 
 const seats = new Route({
   getParentRoute: () => rootRoute,
-  path: "/seats",
+  path: '/seats',
   component: SeatsView,
 });
 
 const updateReservation = new Route({
   getParentRoute: () => rootRoute,
-  path: "/edit-booking/$seatNumber",
+  path: '/edit-booking/$seatNumber',
   component: UpdateReservation,
 });
 
@@ -51,7 +51,7 @@ const notFoundRoute = new NotFoundRoute({
 
 const indexRoute = new Route({
   getParentRoute: () => rootRoute,
-  path: "/",
+  path: '/',
   component: () => <Navigate to="/seats" />,
 });
 
@@ -65,7 +65,7 @@ const routeTree = rootRoute.addChildren([
 const router = new Router({
   routeTree,
   notFoundRoute,
-  defaultPreload: "intent",
+  defaultPreload: 'intent',
   defaultComponent: SeatsView,
   defaultErrorComponent: NotFound,
 });
