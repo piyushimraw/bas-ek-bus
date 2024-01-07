@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, FormProvider } from "react-hook-form";
-import { Bus } from "../../utils/data";
+import { Bus, SeatBookingPayload } from "../../utils/data";
 import { seatUserValidation } from "./validation";
 import PassengerDetailsCard from "./passenger-details";
 
@@ -8,10 +8,12 @@ const ConfirmSeatBooking = ({
   selectedSeats,
   bus,
   onCancel,
+  onSubmit,
 }: {
   selectedSeats: string[];
   bus: Bus;
   onCancel: () => void;
+  onSubmit: (data: SeatBookingPayload) => void;
 }) => {
   const form = useForm({
     defaultValues: selectedSeats.reduce(
@@ -55,9 +57,7 @@ const ConfirmSeatBooking = ({
             type="submit"
             className="bg-blue-500 text-white hover:bg-blue-600 px-4 py-2 rounded-md"
             onClick={() => {
-              form.handleSubmit((data) => {
-                console.log(data);
-              })();
+              form.handleSubmit((data) => {onSubmit(data)})();
             }}
           >
             Confirm Booking

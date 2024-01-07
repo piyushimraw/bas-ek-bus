@@ -1,5 +1,5 @@
 export type User = {
-  id: string;
+  id?: string;
   name: string;
   email: string;
   phone: string;
@@ -20,12 +20,18 @@ export type Bus = {
   };
 };
 
+export type SeatBookingPayload =  Record<string, User>;
+
 export const getBusData = async (id: string) => {
   const bus: string | null = localStorage.getItem(`bus:${id}`);
   if (bus) {
     return JSON.parse(bus) as Bus;
   }
   return null;
+};
+
+export const setBusData = async (bus: Bus) => {
+    localStorage.setItem(`bus:${bus.id}`, JSON.stringify(bus));
 };
 
 export const bookSeat = async (busId: string, seatId: string, user: User) => {
@@ -48,7 +54,7 @@ export type SeatNumber = [
 
 export const getSeat = (bus: Bus, seatId: string) => {
     const [floor, seatNumber]: SeatNumber = seatId.split("") as SeatNumber;
-    const seat = bus.seats[floor][Number.parseInt(seatNumber, 10)];
+    const seat = {...bus.seats[floor][Number.parseInt(seatNumber, 10)]};
     return seat;
 }
 

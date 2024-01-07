@@ -1,5 +1,5 @@
 import { ReactNode, createContext, useContext, useEffect, useState } from "react";
-import { Bus, getBusData, getSeat } from "../../utils/data";
+import { Bus, SeatBookingPayload, SeatNumber, getBusData, getSeat, setBusData } from "../../utils/data";
 
 type Params = {
   id: string;
@@ -7,8 +7,8 @@ type Params = {
 
 type UseBusReturnType = {
   bus?: Bus;
-  bookSeats: (seatIds: string[]) => void;
-  unbookSeats: (seatIds: string[]) => void;
+  bookSeats: (seatIds: SeatBookingPayload) => void;
+  unbookSeats: (seatIds: SeatBookingPayload) => void;
   isSeatOccupied: (seatId: string) => boolean;
   isSeatSelected: (seatId: string) => boolean;
   selectedSeats: string[];
@@ -67,12 +67,41 @@ const BusContext = createContext<UseBusReturnType | undefined>(undefined);
   }
 
 
+  const bookSeats = (payload: SeatBookingPayload) => {
+    if (!bus) return;
+    const newBus = { ...bus };
+    const seatIds = Object.keys(payload);
+    seatIds.forEach((seatId) => {
+      const [floor, seatNumber]: SeatNumber = seatId.split("") as SeatNumber;
+      newBus.seats[floor][Number.parseInt(seatNumber, 10)].isOccupied = true;
+      newBus.seats[floor][Number.parseInt(seatNumber, 10)].bookedBy = payload[seatId];
+    });
+    setBus(newBus);
+    setSelectedSeats([]);
+    setBusData(newBus);
+  };
+
+  const unbookSeats = (payload: SeatBookingPayload) => {
+    if (!bus) return;
+    const newBus = { ...bus };
+    const seatIds = Object.keys(payload);
+    seatIds.forEach((seatId) => {
+      const [floor, seatNumber]: SeatNumber = seatId.split("") as SeatNumber;
+      newBus.seats[floor][Number.parseInt(seatNumber, 10)].isOccupied = false;
+      newBus.seats[floor][Number.parseInt(seatNumber, 10)].bookedBy = undefined;
+    });
+    setBus(newBus);
+    setSelectedSeats([]);
+    setBusData(newBus);
+  };
+
+
   return {
     bus,
     selectedSeats,
     totalSelectedSeats: selectedSeats.length,
-    bookSeats: (seatIds: string[]) => {},
-    unbookSeats: (seatIds: string[]) => {},
+    bookSeats: bookSeats,
+    unbookSeats: unbookSeats,
     isSeatOccupied,
     isSeatSelected: isSeatSelected,
     selectSeat: selectSeat,
